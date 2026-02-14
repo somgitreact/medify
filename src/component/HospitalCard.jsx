@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 const HospitalCard = ({item, dates}) => {
     const [showBooking, setShowBooking] = useState(false)
     const [selectedDate, setSelectedDate] = useState(dates[0])
-   
+     const isBookedView = dates.length === 0;
     console.log("LLLLLLLLLLLLLL", dates, selectedDate);
 
     

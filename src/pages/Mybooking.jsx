@@ -4,7 +4,7 @@ import HospitalCard from '../component/HospitalCard'
 const Mybooking = () => {
   const [bookList, setBookList] = useState([])
   const [ready, setReady] = useState(false);
-  const isBookedView = dates.length === 0;
+
 
   
   // useEffect(()=>{
