@@ -9,46 +9,90 @@ const HospitalCard = ({item, dates}) => {
     console.log("LLLLLLLLLLLLLL", dates, selectedDate);
 
     
-    const bookingHandler = (time)=>{
-        const existing = localStorage.getItem("bookings")
-        let hasBooking = existing ? JSON.parse(existing) : []
-console.log("hasBooking", hasBooking);
+//     const bookingHandler = (time)=>{
+//         // const existing = localStorage.getItem("bookings")
+//         // let hasBooking = existing ? JSON.parse(existing) : []
+//         let hasBooking = [];
 
-//const iflisted = hasBooking.find((listed)=> listed["Provider ID"] === item["Provider ID"])
-const iflisted = hasBooking.findIndex((value, index, array) => value["Provider ID"] === item["Provider ID"])
+// try {
+//   const existing = localStorage.getItem("bookings");
+//   hasBooking = existing ? JSON.parse(existing) : [];
+// } catch (e) {
+//   hasBooking = [];
+// }
+// console.log("hasBooking", hasBooking);
 
-//  console.log("lift", iflisted);
+// //const iflisted = hasBooking.find((listed)=> listed["Provider ID"] === item["Provider ID"])
+// const iflisted = hasBooking.findIndex((value, index, array) => value["Provider ID"] === item["Provider ID"])
 
-const constructDat= selectedDate.split(',')
-const pushDate = constructDat[0] + ',' + constructDat[1]
+// //  console.log("lift", iflisted);
 
- console.log("check", newBooking);
+// const constructDat= selectedDate.split(',')
+// const pushDate = constructDat[0] + ',' + constructDat[1]
 
- if(iflisted  !== -1 ){
- // hasBooking = [...hasBooking, {...iflisted, "timeAdd": [...timeAdd, time]}]
-  const updatedBooking = { ...hasBooking[iflisted] };
-  updatedBooking.timeAdd = [...updatedBooking.timeAdd, time]
-  hasBooking[iflisted] = updatedBooking;
- } else {
-     const newBooking = {
-            "Provider ID":item["Provider ID"],
-            "Hospital Name": item["Hospital Name"],
-            "City":item["City"],
-            "State":item["State"],
-            "Hospital Type":item["Hospital Type"],
-            "date": pushDate,
-            "timeAdd": [time]
-        }
-  hasBooking.push(newBooking)
- }
- console.log("hasBooking", hasBooking);
+//  console.log("check", newBooking);
+
+//  if(iflisted  !== -1 ){
+//  // hasBooking = [...hasBooking, {...iflisted, "timeAdd": [...timeAdd, time]}]
+//   const updatedBooking = { ...hasBooking[iflisted] };
+//   updatedBooking.timeAdd = [...updatedBooking.timeAdd, time]
+//   hasBooking[iflisted] = updatedBooking;
+//  } else {
+//      const newBooking = {
+//             "Provider ID":item["Provider ID"],
+//             "Hospital Name": item["Hospital Name"],
+//             "City":item["City"],
+//             "State":item["State"],
+//             "Hospital Type":item["Hospital Type"],
+//             "date": pushDate,
+//             "timeAdd": [time]
+//         }
+//   hasBooking.push(newBooking)
+//  }
+//  console.log("hasBooking", hasBooking);
 
      
-//hasBooking.push(newBooking)
+// //hasBooking.push(newBooking)
 
-    localStorage.setItem("bookings", JSON.stringify(hasBooking))
-    setShowBooking(false)
-    }
+//     localStorage.setItem("bookings", JSON.stringify(hasBooking))
+//     setShowBooking(false)
+//     }
+
+
+const bookingHandler = (time) => {
+
+  let hasBooking = [];
+
+  try {
+    const existing = localStorage.getItem("bookings");
+    hasBooking = existing ? JSON.parse(existing) : [];
+  } catch {
+    hasBooking = [];
+  }
+
+  const constructDat = selectedDate.split(',');
+  const pushDate = constructDat[0] + ',' + constructDat[1];
+
+  // ✅ Each slot is a NEW booking (this is what Cypress expects)
+  const newBooking = {
+    "Provider ID": item["Provider ID"],
+    "Hospital Name": item["Hospital Name"],
+    "City": item["City"],
+    "State": item["State"],
+    "Hospital Type": item["Hospital Type"],
+    "date": pushDate,
+    "time": time
+  };
+
+  hasBooking.push(newBooking);
+
+  localStorage.setItem("bookings", JSON.stringify(hasBooking));
+
+  setShowBooking(false);
+};
+
+
+
     // let numD = item?.date?.split(",")
   /// console.log("------", numD[1], numD[2], Date.parse(`${numD[1]}, ${numD[2]}`));
     
@@ -85,9 +129,10 @@ const pushDate = constructDat[0] + ',' + constructDat[1]
   {isBookedView ? (
     <div className='flex gap-2 flex-wrap'>
       <Button variant='outlined'>{item.date}</Button>
-      {item?.timeAdd?.map((time, index) => (
+      {/* {item?.timeAdd?.map((time, index) => (
         <Button key={index} variant='outlined'>{time}</Button>
-      ))}
+      ))} */}
+      <Button variant='outlined'>{item.time}</Button>
     </div>
   ) : (
     <>

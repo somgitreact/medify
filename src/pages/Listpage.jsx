@@ -35,9 +35,12 @@ const Listpage = () => {
       <Header />
       <div className='wrap'>
         <div>
-          <h1 className='innertitle'>
+          {/* <h1 className='innertitle'>
             {listData.length} medical centers available in {selectedCity}
-          </h1>
+          </h1> */}
+          <h2>
+  {listData.length} medical centers available in {selectedCity.toUpperCase()}
+</h2>
           <p>Book appointments with minimum wait-time & verified doctor details</p>
         </div>
 

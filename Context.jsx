@@ -18,7 +18,11 @@ export const Context = ({children}) => {
            // console.log("context datafroem)))))))))", data);
             
             setState(data)
-            localStorage.setItem("bookings", localStorage.getItem("bookings") || [])
+           // localStorage.setItem("bookings", localStorage.getItem("bookings") || [])
+           if (!localStorage.getItem("bookings")) {
+  localStorage.setItem("bookings", JSON.stringify([]));
+}
+
         }
         getdata()
      },[])
