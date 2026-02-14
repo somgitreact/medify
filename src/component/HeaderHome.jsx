@@ -32,6 +32,7 @@ const HeaderHome = () => {
 
         <Roundbox bgcolor='#fff'>
             <div className='serchpart'>
+                <div id="state">
                  <Autocomplete
                  id="state"
       disablePortal
@@ -45,6 +46,7 @@ const HeaderHome = () => {
       }}
       renderInput={(params) => <TextField {...params} label="Select State" />}
     />
+    </div>
      <Autocomplete
      id="city"
        disabled={!city} 
