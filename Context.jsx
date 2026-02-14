@@ -1,60 +1,71 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { FetchData } from '../utilsApi/Alapi';
 import { useNavigate } from 'react-router-dom';
-
 
 export const Maincontxt = createContext();
 
 export const Context = ({children}) => {
-     const [state, setState]= useState([])
-     const [selectedState, setSelectedState]= useState('')
-     const [city, setCity]= useState([])
-     const [selectedCity, setSelectedCity]= useState('')
-     const [listData, setListData]= useState([])
-     const navigate = useNavigate()
-     useEffect(()=>{
-        const getdata = async ()=>{
-            const data = await FetchData('states')
-           // console.log("context datafroem)))))))))", data);
-            
-            setState(data)
-           // localStorage.setItem("bookings", localStorage.getItem("bookings") || [])
-           if (!localStorage.getItem("bookings")) {
-  localStorage.setItem("bookings", JSON.stringify([]));
-}
 
-        }
-        getdata()
-     },[])
-     useEffect(()=>{
-      setCity([])
-        const getCitydata = async ()=>{
-            const data = await FetchData(`cities/${selectedState}`)
-            //console.log("context datafroem)))))))))", data);
-            
-            setCity(data)
-        }
-        getCitydata()
-     },[selectedState])
-//console.log("+++++++++", selectedState);
+  const [state, setState]= useState([])
+  const [selectedState, setSelectedState]= useState('')
+  const [city, setCity]= useState([])
+  const [selectedCity, setSelectedCity]= useState('')
+  const [listData, setListData]= useState([])
 
-const searchHandler = async ()=>{
-      const HospitalData = await FetchData(`data?state=${selectedState}&city=${selectedCity}`)
-      console.log("context datafroem)))))))))", HospitalData);
-      setListData(HospitalData)
-}
+  const navigate = useNavigate()
 
-const searchHandlerParams = async ()=>{
-      const HospitalData = await FetchData(`data?state=${selectedState}&city=${selectedCity}`)
-      console.log("context datafroem)))))))))", HospitalData);
-      setListData(HospitalData)
-      navigate(`/list/${listData}`)
+  // ✅ Load States
+  useEffect(()=>{
+    const getdata = async ()=>{
+      const data = await FetchData('states')
+      setState(data || [])
+    }
+    getdata()
 
-}
+    // ✅ Proper localStorage init
+    if(!localStorage.getItem("bookings")){
+      localStorage.setItem("bookings", JSON.stringify([]))
+    }
+
+  },[])
+
+  // ✅ Load Cities
+  useEffect(()=>{
+    if(!selectedState) return;
+
+    const getCitydata = async ()=>{
+      const data = await FetchData(`cities/${selectedState}`)
+      setCity(data || [])
+    }
+    getCitydata()
+
+  },[selectedState])
+
+  // ✅ SEARCH (Matches Cypress API)
+  const searchHandler = async ()=>{
+    if(!selectedState || !selectedCity) return;
+
+    const HospitalData =
+      await FetchData(`data?state=${selectedState}&city=${selectedCity}`)
+
+    setListData(HospitalData || [])
+
+    // Cypress expects navigation to /list
+    navigate('/list')
+  }
+
   return (
-    <Maincontxt.Provider value={{state, setSelectedState, city,searchHandlerParams, setSelectedCity, searchHandler, listData, selectedCity, selectedState}}>
+    <Maincontxt.Provider value={{
+      state,
+      city,
+      selectedState,
+      selectedCity,
+      setSelectedState,
+      setSelectedCity,
+      searchHandler,
+      listData
+    }}>
       {children}
     </Maincontxt.Provider>
   )
 }
-

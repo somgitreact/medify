@@ -42,9 +42,9 @@ const Header = () => {
             // 2. Control the value
       //value={value} 
       // 3. Update the value on change
-      onChange={(event, newValue) => {
-        setSelectedState(newValue);
-      }}
+      getOptionLabel={(option) => option || ""}
+
+      onChange={(e, newValue) => setSelectedState(newValue || '')}
       renderInput={(params) => <TextField {...params} label="Select State" />}
     />
     </div>
@@ -54,9 +54,10 @@ const Header = () => {
       disablePortal
       options={city}
       sx={{ width: 300 }}
-      onChange={(event, newValue) => {
-        setSelectedCity(newValue);
-      }}
+getOptionLabel={(option) => option || ""}
+
+      onChange={(e, newValue) => setSelectedCity(newValue || '')}
+
       renderInput={(params) => <TextField {...params} label="Select City" />}
     />
     </div>
