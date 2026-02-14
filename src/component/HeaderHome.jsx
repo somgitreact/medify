@@ -34,7 +34,7 @@ const HeaderHome = () => {
             <div className='serchpart'>
                 <div id="state">
                  <Autocomplete
-                 id="state"
+                
       disablePortal
       options={state}
       sx={{ width: 300 }}
@@ -47,8 +47,8 @@ const HeaderHome = () => {
       renderInput={(params) => <TextField {...params} label="Select State" />}
     />
     </div>
+    <div id="city">
      <Autocomplete
-     id="city"
        disabled={!city} 
       disablePortal
       options={city}
@@ -59,6 +59,7 @@ const HeaderHome = () => {
       }}
       renderInput={(params) => <TextField {...params} label="Select City" />}
     />
+    </div>
     <Button type="submit"  id="searchBtn" variant="contained" onClick={searchHandlerParams} sx={{backgroundColor:'var(--primaryColor)', fontSize:'16px', width:'200px', textTransform:'capitalize', fontWeight:300}} >
       Search
     </Button>

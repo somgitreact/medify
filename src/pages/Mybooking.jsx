@@ -18,9 +18,13 @@ const Mybooking = () => {
 
 
 <div className='flex-wrap flex justify-between'>
+  <h1>My Bookings</h1>
                <div className='listofhospital  w-[100%] md:w-[70%]  '>
 
-                {bookList?.map((item)=> <HospitalCard key={item["Provider ID"]} item={item} dates={[]} />)}
+                { bookList?.length === 0 ?
+                  <h3>No Bookings Found!</h3>
+                :
+                bookList?.map((item)=> <HospitalCard key={item["Provider ID"]} item={item} dates={[]} />)}
 
         
          </div>
