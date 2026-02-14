@@ -2,25 +2,39 @@ import React, { useContext, useState } from 'react'
 import Header from '../component/Header'
 import { Maincontxt } from '../context/Context'
 import HospitalCard from '../component/HospitalCard'
-import { useParams } from 'react-router-dom'
+
 import { GenerateDate } from '../utilsApi/GenerateDate'
 
 
 const Listpage = () => {
-  const {listData, selectedCity} = useContext(Maincontxt)
+  //const {listData, selectedCity} = useContext(Maincontxt)
+  const { listData = [], selectedCity = "" } = useContext(Maincontxt) || {};
   const [dates, setDates] = useState([])
-   const {params} = useParams()
+
   console.log(params);
    const datbook = new Date()
     console.log("date=========",datbook );
  //const {"Provider ID", "Hospital Name", City  State, Hospital Type, }
-useState(()=>{
-  const dateall = async ()=>{
+// useState(()=>{
+//   const dateall = async ()=>{
+//     const datArr = await GenerateDate();
+//      setDates(datArr)
+//   }
+//   dateall()
+// },[])
+useEffect(() => {
+  const dateall = async () => {
     const datArr = await GenerateDate();
-     setDates(datArr)
-  }
-  dateall()
-},[])
+    setDates(datArr || []);
+  };
+
+  dateall();
+}, []);
+
+if (!listData.length) {
+  return <div className="wrap"><h1>Loading...</h1></div>;
+}
+
   return (
     <div className=''>
       <Header />
