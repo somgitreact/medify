@@ -50,7 +50,7 @@ const Header = () => {
     </div>
     <div id="city">
      <Autocomplete
-      disabled={!city} 
+      disabled={city.length === 0} 
       disablePortal
       options={city}
       sx={{ width: 300 }}

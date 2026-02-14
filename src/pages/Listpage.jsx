@@ -39,7 +39,9 @@ const Listpage = () => {
             {listData.length} medical centers available in {selectedCity}
           </h1> */}
           <h2>
-  {listData.length} medical centers available in {selectedCity.toUpperCase()}
+ <h1 className='innertitle'>
+  {(listData?.length || 0)} medical centers available in {selectedCity || ""}
+</h1>
 </h2>
           <p>Book appointments with minimum wait-time & verified doctor details</p>
         </div>
