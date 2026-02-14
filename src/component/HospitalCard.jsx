@@ -65,7 +65,7 @@ const pushDate = constructDat[0] + ',' + constructDat[1]
                
  </div>
 
-{dates.length ? 
+{/* {dates.length ? 
               <div className='btnpart flex flex-col justify-end'> 
                 <p className='text-green-500! text-[15px] font-semibold'>Available Today</p>                
                 <Button className='' onClick={()=>setShowBooking(!showBooking)} variant="contained" sx={{backgroundColor:'var(--primaryColor)'}} >Book FREE Center Visit</Button>
@@ -79,7 +79,30 @@ const pushDate = constructDat[0] + ',' + constructDat[1]
                     
                     </div>
               </div>
-}
+} */}
+
+<div className='btnpart flex flex-col justify-start'>
+  {isBookedView ? (
+    <div className='flex gap-2 flex-wrap'>
+      <Button variant='outlined'>{item.date}</Button>
+      {item?.timeAdd?.map((time, index) => (
+        <Button key={index} variant='outlined'>{time}</Button>
+      ))}
+    </div>
+  ) : (
+    <>
+      <p className='text-green-500! text-[15px] font-semibold'>Available Today</p>
+      <Button
+        onClick={() => setShowBooking(!showBooking)}
+        variant="contained"
+        sx={{ backgroundColor: 'var(--primaryColor)' }}
+      >
+        Book FREE Center Visit
+      </Button>
+    </>
+  )}
+</div>
+
 
             </div>
 
@@ -109,7 +132,7 @@ const pushDate = constructDat[0] + ',' + constructDat[1]
 
 
             <div className='bookrow'>
-              <p>AfterNoon</p>  
+              <p>Afternoon</p>  
              <div  className='timerow'>
         <Button variant="outlined" onClick={()=>bookingHandler('12:00 AM')}>12:00 AM</Button>
           <Button variant="outlined" onClick={()=>bookingHandler('12:30 PM')}>12:30 PM</Button>

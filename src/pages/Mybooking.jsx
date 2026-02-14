@@ -3,14 +3,32 @@ import HospitalCard from '../component/HospitalCard'
 
 const Mybooking = () => {
   const [bookList, setBookList] = useState([])
+  const [ready, setReady] = useState(false);
+  const isBookedView = dates.length === 0;
+
   
+  // useEffect(()=>{
+  //   const storage = JSON.parse(localStorage.getItem("bookings"))
   
-  useEffect(()=>{
-    const storage = JSON.parse(localStorage.getItem("bookings"))
-  
-  setBookList(storage)
-  },[])
-  console.log("DDDD",bookList);
+  // setBookList(storage)
+  // },[])
+//   useEffect(() => {
+//   const storage = localStorage.getItem("bookings");
+
+//   // ensure always an array
+//   const parsed = storage ? JSON.parse(storage) : [];
+
+//   setBookList(parsed);
+// }, []);
+useEffect(() => {
+  const storage = localStorage.getItem("bookings");
+  const parsed = storage ? JSON.parse(storage) : [];
+
+  setBookList(parsed);
+  setReady(true);   // tell UI data is ready
+}, [])
+  //console.log("DDDD",bookList);
+    if (!ready) return <div>Loading...</div>;
   return (
      <div className=''>
       {/* <Header /> */}
